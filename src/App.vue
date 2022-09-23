@@ -2,19 +2,6 @@
 import SignIn from './components/SignIn.vue'
 import { createClient } from '@supabase/supabase-js'
 import { SupabaseAuthClient } from '@supabase/supabase-js/dist/module/lib/SupabaseAuthClient'
-</script>
-
-<template>    
-  <h1>{{ msg }}</h1> 
-    <p> 
-      Please login if you have an account or register : 
-    </p> 
-    <button @click="login()">Sign In</button><br> 
-    <button @click="logout()">Sign Out</button><br> 
-    <label id="status">You are not yet logged !  </label> 
-</template>
-
-<script>
 
 const SUPABASE_URL = 'https://bzciqcbnmsgtsuflbcjy.supabase.co'
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ6Y2lxY2JubXNndHN1ZmxiY2p5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2NjMzMzcyNDEsImV4cCI6MTk3ODkxMzI0MX0.b52EyXMgTnXNPGjWmEKp5z34Ezx31LVHgbDLTh8kvb8'
@@ -29,10 +16,8 @@ supabase.auth.onAuthStateChange((event, session) => {
   } 
 })
 
-export default {
-  methods: {  
-    //this method allows to release the connexion with the Google account 
-    async logout(){ 
+//this method allows to release the connexion with the Google account 
+async function logout(){ 
       try { 
         const { user, session, error } = await supabase.auth.signOut(); 
         if (error) throw error; 
@@ -40,10 +25,10 @@ export default {
       } catch (error) { 
         alert(error.error_description || error.message); 
       }  
-    }, 
+    }
     //this method allows to log in the system using Google provider 
      
-  async login(){ 
+  async function login(){ 
       try { 
         const { user, session, error } = await supabase.auth.signIn({ 
           provider: 'github', 
@@ -53,9 +38,20 @@ export default {
         alert(error.error_description || error.message); 
       }  
     }
-  }
-}
+
 </script>
+
+<template>    
+  <h1>{{ msg }}</h1> 
+    <p> 
+      Please login if you have an account or register : 
+    </p> 
+    <button @click="login()">Sign In</button><br> 
+    <button @click="logout()">Sign Out</button><br> 
+    <label id="status">You are not yet logged !  </label> 
+</template>
+
+
 
 <style>
 @import './assets/base.css';
